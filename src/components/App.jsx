@@ -1,48 +1,48 @@
 import React, { useState } from "react";
-import ToDOitem from "./ToDoitem";
+import ToDoItem from "./ToDoItem";
+import InputArea from "./InputArea";
+
 function App() {
-  const [Item, setItem] = useState("");
-  const [itemArray, setArray] = useState([]);
+  const [inputText, setInputText] = useState("");
+  const [items, setItems] = useState([]);
+
   function handleChange(event) {
-    var newItem = event.target.value;
-    setItem(newItem);
+    /* event is passed from InputArea.jsx Component*/
+    const newValue = event.target.value;
+    setInputText(newValue);
   }
-  function handleSubmit() {
-    setArray((prev) => {
-      return [...prev, Item];
+
+  function addItem() {
+    setItems((prevItems) => {
+      return [...prevItems, inputText];
     });
-    setItem("");
+    setInputText("");
   }
+
   function deleteItem(id) {
-    setArray((prev) => {
-      return prev.filter((item, index) => {
-        return index != id;
+    setItems((prevItems) => {
+      return prevItems.filter((item, index) => {
+        return index !== id;
       });
     });
   }
+
   return (
     <div className="container">
       <div className="heading">
-        <h1>To-Do List </h1>
+        <h1>To-Do List</h1>
       </div>
-      <div className="form">
-        <input name="item" onChange={handleChange} value={Item} type="text" />
-        <button>
-          <span onClick={handleSubmit}>Add</span>
-        </button>
-      </div>
+      <InputArea input={inputText} change={handleChange} add={addItem} />
       <div>
         <ul>
-          {itemArray.map((todoItem, index) => {
-            return (
-              <ToDOitem
-                key={index}
-                onChecked={deleteItem}
-                id={index}
-                text={todoItem}
-              />
-            );
-          })}
+          {items.map((todoItem, index) => (
+            <ToDoItem
+              key={index}
+              id={index}
+              text={todoItem}
+              onChecked={deleteItem}
+            />
+          ))}
         </ul>
       </div>
     </div>

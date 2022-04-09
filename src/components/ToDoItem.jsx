@@ -1,6 +1,6 @@
 import React from "react";
 
-function ToDOitem(props) {
+function ToDoItem(props) {
   return (
     <div
       onClick={() => {
@@ -11,4 +11,4 @@ function ToDOitem(props) {
   );
 }
 
-export default ToDOitem;
+export default ToDoItem;
